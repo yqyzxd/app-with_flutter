@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_module/adapters.dart';
-import 'package:flutter_module/http/Dios.dart';
+import 'package:flutter_module/http/dios.dart';
 class MsgNotificationSettingWidget extends StatefulWidget {
   @override
   _MsgNotificationSettingWidgetState createState() => _MsgNotificationSettingWidgetState();
@@ -24,7 +24,7 @@ class _MsgNotificationSettingWidgetState extends State<MsgNotificationSettingWid
   @override
   void initState() {
     super.initState();
-    Dios.instance.
+
   }
 
   @override

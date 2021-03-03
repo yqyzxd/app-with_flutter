@@ -1,20 +1,40 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
-import 'package:flutter_module/http/Dios.dart';
+import 'package:flutter_module/http/base_response.dart';
+import 'package:flutter_module/http/dios.dart';
 import 'package:flutter_module/mu_notify.dart';
+
+import 'bean/banner_response.dart';
+
+
 void main() => runApp(MyApp());
+
+
+
+
+
+
 
 class MyApp extends StatelessWidget {
 
   MyApp(){
     BaseOptions options=new BaseOptions(
-      baseUrl: "https://www.xx.com/api",
+      baseUrl: "https://www.wanandroid.com",
       connectTimeout: 5000,
       receiveTimeout: 3000,
     );
-    Dios dios= Dios.newInstance(options);
+    Dios.newInstance(options);
+
+    Dios.getInstance().get("/banner/json", null,(BannerResponse r){
+      r.data.forEach((element) {
+        print("desc:"+element.desc);
+      });
+    },(e){
+      print("onError"+e.msg);
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
