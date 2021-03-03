@@ -1,11 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:flutter_module/flutter_initializer.dart';
 import 'package:flutter_module/http/base_response.dart';
 import 'package:flutter_module/http/dios.dart';
 import 'package:flutter_module/mu_notify.dart';
+import 'package:flutter_module/request/banner_request.dart';
 
-import 'bean/banner_response.dart';
+import 'response/banner_response.dart';
 
 
 void main() => runApp(MyApp());
@@ -19,23 +21,23 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
 
   MyApp(){
-    BaseOptions options=new BaseOptions(
-      baseUrl: "https://www.wanandroid.com",
-      connectTimeout: 5000,
-      receiveTimeout: 3000,
-    );
-    Dios.newInstance(options);
+    FlutterInitializer.init();
+    testHttp();
 
-    Dios.getInstance().get("/banner/json", null,(BannerResponse r){
-      r.data.forEach((element) {
-        print("desc:"+element.desc);
+
+  }
+
+  void testHttp(){
+    final bannerRequest=BannerRequest();
+    Dios.getInstance().get("/banner/json", bannerRequest.toJson(),(responseMap){
+      final response=BannerResponse.fromJson(responseMap);
+      response.data.forEach((element) {
+        print(element.desc);
       });
     },(e){
       print("onError"+e.msg);
     });
   }
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

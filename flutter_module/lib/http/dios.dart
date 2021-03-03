@@ -1,12 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-
 import 'package:dio/dio.dart';
 import 'package:flutter_module/http/base_request.dart';
 import 'package:flutter_module/http/base_response.dart';
 
-typedef OnSuccess<BR> = void Function(BR reponse);
+typedef OnSuccess = void Function(Map<String,dynamic> json);
 typedef OnError =void Function(ErrorBean error);
 
 class Dios {
@@ -14,9 +13,15 @@ class Dios {
 
   Dios._privasteConstructor(BaseOptions options) {
     _dio = new Dio(options);
+
+  }
+  void enabledLog(){
     _dio.interceptors.add(LogInterceptor(responseBody: true)); //开启请求日志
   }
-
+  Dios addInterceptor(Interceptor interceptor){
+    _dio.interceptors.add(interceptor);
+    return _sInstance;
+  }
   static Dios _sInstance;
 
   static Dios newInstance(BaseOptions options) {
@@ -30,16 +35,15 @@ class Dios {
 
 
 
-  void get<BR extends BaseResponse>(
-      String path, BaseRequest request,OnSuccess<BR> onSuccess,  OnError onError) {
-      _dio.get(path).then((r) {
+  void get(
+      String path, Map<String,dynamic> requestParameters,OnSuccess onSuccess,  OnError onError) {
+      //参数不填options时 ResponseType为json，r.data.toString()输出的json 子段没有双引号，导致 jsonDecode报错
+      _dio.get(path,queryParameters:requestParameters,options:  Options(responseType: ResponseType.plain)).then((r) {
         if (r.statusCode == HttpStatus.ok) {
           //转化成 json
-          print(r.data.toString());
+          print("r.data.toString()  "+r.data.toString());
           Map<String,dynamic> map = jsonDecode(r.data.toString());
-
-
-          //onSuccess(br.fromJson(map));
+          onSuccess(map);
         } else {
           onError(ErrorBean(r.statusCode.toString(), r.statusCode));
 
@@ -47,20 +51,22 @@ class Dios {
       }).catchError((e) => onError(ErrorBean(e.toString(), 500)));
   }
 
-  void post<BR extends BaseResponse>(
-      String path, BaseRequest request,OnSuccess onSuccess,  OnError onError) {
+  void post(
+      String path, Map<String,dynamic> requestParameters,OnSuccess onSuccess,  OnError onError) {
     //build queryParameters
-    Map<String, dynamic> queryParameters = Map();
-    _dio.post(path, queryParameters: queryParameters).then((r) {
+
+    _dio.post(path, queryParameters: requestParameters,options:  Options(responseType: ResponseType.plain)).then((r) {
       if (r.statusCode == HttpStatus.ok) {
         //转化成 json
-        BR response = jsonDecode(r.data.toString());
-        onSuccess(response);
+        Map<String,dynamic> map= jsonDecode(r.data.toString());
+        onSuccess(map);
       } else {
         onError(ErrorBean("", r.statusCode));
       }
     }).catchError((e) => onError(ErrorBean(e.toString(), 500)));
   }
+
+
 }
 
 class ErrorBean {
@@ -70,8 +76,4 @@ class ErrorBean {
   ErrorBean(this.msg, this.code);
 }
 
-abstract class OnLoadListener<BR extends BaseResponse> {
-  void onLoadSuccess(BR reponse);
 
-  void onError(ErrorBean error);
-}

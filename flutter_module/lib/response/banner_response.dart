@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import '../http/base_response.dart';
-import 'banner.dart';
+import '../bean/banner.dart';
 
 
 part 'banner_response.g.dart';
