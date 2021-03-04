@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter_module/flutter_initializer.dart';
@@ -8,11 +7,11 @@ import 'package:flutter_module/mu_notify.dart';
 import 'package:flutter_module/request/banner_request.dart';
 
 import 'response/banner_response.dart';
+import 'widget_loading.dart';
+import 'user_detail_page.dart';
 
 
-void main() => runApp(MyApp());
-
-
+void main() => runApp(UserDetailPage());
 
 
 
@@ -23,6 +22,8 @@ class MyApp extends StatelessWidget {
   MyApp(){
     FlutterInitializer.init();
     testHttp();
+
+
 
 
   }
@@ -43,7 +44,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Welcome to Flutter",
       theme: ThemeData(primaryColor: Colors.white),
-      home: MsgNotificationSettingWidget(),//RandomWords(),
+      home:LoadingWidget(
+          content: MsgNotificationSettingWidget(),
+        state: LoadingWidget.CONTENT_STATE,
+      ),//RandomWords(),
     );
   }
 }

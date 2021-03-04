@@ -49,6 +49,7 @@ flutter:
   assets:
     - icons/icon_cb_normal.png
     - icons/icon_cb_selected.png
+    - icons/bg_setting_group.png
 
   # To add Flutter specific assets to your application, add an assets section, 
   # like this:
