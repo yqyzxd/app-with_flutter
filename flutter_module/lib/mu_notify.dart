@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_module/adapters.dart';
 import 'package:flutter_module/http/dios.dart';
+import 'package:flutter_module/title_bar.dart';
 
 class MsgNotificationSettingWidget extends StatefulWidget {
   @override
@@ -28,12 +29,21 @@ class _MsgNotificationSettingWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    /*return Scaffold(
       appBar: AppBar(
         title: Text('Startup Name Generator'),
       ),
       body: _listView(),
+    );*/
+    return Column(
+      children: [
+        TitlerBar('设置'),
+        Expanded(child:  _listView())
+
+      ],
     );
+    
+    return TitlerBar('设置');
   }
 
   Widget _listView() {

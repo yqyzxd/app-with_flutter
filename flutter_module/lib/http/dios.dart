@@ -41,7 +41,7 @@ class Dios {
       _dio.get(path,queryParameters:requestParameters,options:  Options(responseType: ResponseType.plain)).then((r) {
         if (r.statusCode == HttpStatus.ok) {
           //转化成 json
-          print("r.data.toString()  "+r.data.toString());
+          //print("r.data.toString()  "+r.data.toString());
           Map<String,dynamic> map = jsonDecode(r.data.toString());
           onSuccess(map);
         } else {
