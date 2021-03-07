@@ -10,6 +10,7 @@ abstract class BaseViewModel<T>{
   @protected
   @mustCallSuper
   void initViewMode(){
+    print('BaseViewModel initViewMode');
     assert(_lifecycleState==_StateLifecycle.created);
     _lifecycleState=_StateLifecycle.initialized;
   }

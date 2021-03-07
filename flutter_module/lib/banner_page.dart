@@ -10,19 +10,13 @@ class BannerPage extends StatefulWidget {
   _BannerPageState createState() => _BannerPageState();
 }
 
-class _BannerPageState extends State<BannerPage> implements ViewModelHolder<BannerViewModel>{
-  /*BaseViewModel _viewModel;
-  @override
-  void initState() {
-    super.initState();
-    _viewModel=ViewModelProvider.of(context);
+class _BannerPageState extends ViewModelHolder<BannerPage,BannerViewModel>{
 
-  }*/
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+
     viewModel.request();
   }
   @override
@@ -34,14 +28,14 @@ class _BannerPageState extends State<BannerPage> implements ViewModelHolder<Bann
       body: StreamBuilder(
         stream: viewModel.dataStream,
         builder: (BuildContext context,AsyncSnapshot<BannerResponse> snapshot){
+          print('_showLoadingWidget'+snapshot.connectionState.toString());
           return _showLoadingWidget(snapshot);
         },
       ),
     );
   }
 
-  @override
-  BannerViewModel get viewModel => ViewModelProvider.of(context);
+
 
   LoadingWidget _showLoadingWidget(AsyncSnapshot<BannerResponse> snapshot) {
     int state=LoadingWidget.LOADING_STATE;
@@ -58,4 +52,6 @@ class _BannerPageState extends State<BannerPage> implements ViewModelHolder<Bann
       state: state,
     );
   }
+
+
 }

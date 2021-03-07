@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter_module/banner_page.dart';
+import 'package:flutter_module/banner_view_model.dart';
 import 'package:flutter_module/flutter_initializer.dart';
+import 'package:flutter_module/wind/mvvm/view_model_provider.dart';
 
 import 'mu_notify.dart';
 import 'request/banner_request.dart';
@@ -41,7 +43,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Welcome to Flutter",
       theme: ThemeData(primaryColor: Colors.white),
-      home:BannerPage()/*LoadingWidget(
+      home:ViewModelProvider(
+        viewModel: BannerViewModel(),
+        child: BannerPage(),
+      )/*LoadingWidget(
           content: MsgNotificationSettingWidget(),
         state: LoadingWidget.CONTENT_STATE,
       ),*///RandomWords(),

@@ -13,7 +13,6 @@ class ViewModelProvider<VM extends BaseViewModel> extends StatefulWidget {
     ViewModelProvider<VM> provider =
     context.findAncestorWidgetOfExactType<ViewModelProvider<VM>>();
     VM vm=provider.viewModel;
-    vm.initViewMode();
     return vm;
   }
 
@@ -24,7 +23,6 @@ class ViewModelProvider<VM extends BaseViewModel> extends StatefulWidget {
 class _ViewModelProviderState extends State<ViewModelProvider> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     widget.viewModel.initViewMode();
   }

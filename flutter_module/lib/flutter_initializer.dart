@@ -11,6 +11,6 @@ class FlutterInitializer{
       connectTimeout: 10000,
       receiveTimeout: 10000,
     );
-    Dios.newInstance(options);
+    Dios.newInstance(options).enabledLog();
   }
 }

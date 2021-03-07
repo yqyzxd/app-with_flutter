@@ -13,8 +13,10 @@ class BannerViewModel extends BaseViewModel<BannerResponse>{
     final bannerRequest=BannerRequest();
     return Dios.getInstance().get("/banner/json", bannerRequest.toJson(),(responseMap){
       final response=BannerResponse.fromJson(responseMap);
+      print('dataObservable.add(response);');
       dataObservable.add(response);
     },(e){
+      print('dataObservable.addError(e);');
       dataObservable.addError(e);
     });
   }
