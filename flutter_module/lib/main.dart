@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:flutter_module/banner_page.dart';
 import 'package:flutter_module/flutter_initializer.dart';
-import 'package:flutter_module/http/base_response.dart';
-import 'package:flutter_module/http/dios.dart';
-import 'package:flutter_module/mu_notify.dart';
-import 'package:flutter_module/request/banner_request.dart';
 
+import 'mu_notify.dart';
+import 'request/banner_request.dart';
 import 'response/banner_response.dart';
-import 'widget_loading.dart';
+import 'wind/http/dios.dart';
+
+import 'wind/widget_loading.dart';
 import 'user_detail_page.dart';
 
 
-void main() => runApp(UserDetailPage());
+void main() => runApp(MyApp());
 
 
 
@@ -21,11 +22,7 @@ class MyApp extends StatelessWidget {
 
   MyApp(){
     FlutterInitializer.init();
-    testHttp();
-
-
-
-
+    //testHttp();
   }
 
   void testHttp(){
@@ -44,10 +41,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Welcome to Flutter",
       theme: ThemeData(primaryColor: Colors.white),
-      home:LoadingWidget(
+      home:BannerPage()/*LoadingWidget(
           content: MsgNotificationSettingWidget(),
         state: LoadingWidget.CONTENT_STATE,
-      ),//RandomWords(),
+      ),*///RandomWords(),
     );
   }
 }

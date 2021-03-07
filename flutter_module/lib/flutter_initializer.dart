@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
-import 'http/dios.dart';
+
+import 'wind/http/dios.dart';
+
 
 class FlutterInitializer{
 

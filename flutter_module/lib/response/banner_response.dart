@@ -1,5 +1,6 @@
+import 'package:flutter_module/wind/http/base_response.dart';
 import 'package:json_annotation/json_annotation.dart';
-import '../http/base_response.dart';
+
 import '../bean/banner.dart';
 
 

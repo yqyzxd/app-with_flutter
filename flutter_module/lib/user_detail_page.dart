@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_module/offstage_appbar.dart';
-import 'widget_loading.dart';
+import 'package:flutter_module/wind/offstage_appbar.dart';
+import 'wind/widget_loading.dart';
 import 'package:flutter_module/mu_notify.dart';
 import 'package:flutter_module/flutter_initializer.dart';
 

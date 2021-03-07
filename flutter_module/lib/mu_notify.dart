@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_module/adapters.dart';
-import 'package:flutter_module/http/dios.dart';
-import 'package:flutter_module/title_bar.dart';
+import 'package:flutter_module/wind/adapters.dart';
+import 'package:flutter_module/wind/title_bar.dart';
 
 class MsgNotificationSettingWidget extends StatefulWidget {
   @override

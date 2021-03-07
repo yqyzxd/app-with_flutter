@@ -2,8 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_module/http/base_request.dart';
-import 'package:flutter_module/http/base_response.dart';
+
 
 typedef OnSuccess = void Function(Map<String,dynamic> json);
 typedef OnError =void Function(ErrorBean error);
@@ -35,7 +34,7 @@ class Dios {
 
 
 
-  void get(
+  Future get(
       String path, Map<String,dynamic> requestParameters,OnSuccess onSuccess,  OnError onError) {
       //参数不填options时 ResponseType为json，r.data.toString()输出的json 子段没有双引号，导致 jsonDecode报错
       _dio.get(path,queryParameters:requestParameters,options:  Options(responseType: ResponseType.plain)).then((r) {
@@ -51,7 +50,7 @@ class Dios {
       }).catchError((e) => onError(ErrorBean(e.toString(), 500)));
   }
 
-  void post(
+  Future post(
       String path, Map<String,dynamic> requestParameters,OnSuccess onSuccess,  OnError onError) {
     //build queryParameters
 
