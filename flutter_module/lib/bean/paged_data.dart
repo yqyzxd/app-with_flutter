@@ -17,7 +17,7 @@ class PagedData<T>{
     return PagedData(
       curPage: json['curPage'],
       pageCount: json['pageCount'],
-      datas: json['datas'],
+      datas: json['datas'].cast<T>(),
     );
   }
 

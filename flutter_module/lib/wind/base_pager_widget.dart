@@ -73,7 +73,7 @@ abstract class BasePagerState<VM extends BaseViewModel,Resp extends BaseResponse
       firstPage=response.firstPage;
       items=response.data.datas;
     }
-    if(firstPage) {
+    if(firstPage==true) {
       adapter.replace(items);
     }else{
       adapter.addAll(items);
