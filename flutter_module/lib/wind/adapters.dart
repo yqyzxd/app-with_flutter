@@ -86,6 +86,9 @@ abstract class BaseDelegateAdapter {
   void addAll(List<DisplayItem> items){
     this.items.addAll(items);
   }
+  void add(DisplayItem item){
+    this.items.add(item);
+  }
 }
 
 /**
