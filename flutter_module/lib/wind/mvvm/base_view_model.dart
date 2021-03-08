@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_module/wind/http/base_request.dart';
+import 'package:flutter_module/wind/http/base_response.dart';
 import 'package:rxdart/rxdart.dart';
 
-abstract class BaseViewModel<T>{
+abstract class BaseViewModel<Req extends BaseRequest,Resp extends BaseResponse>{
   _StateLifecycle _lifecycleState=_StateLifecycle.created;
 
 
-  BehaviorSubject<T> dataObservable = BehaviorSubject();
-  Stream<T> get dataStream => dataObservable.stream;
+  BehaviorSubject<Resp> dataObservable = BehaviorSubject();
+  Stream<Resp> get dataStream => dataObservable.stream;
   @protected
   @mustCallSuper
   void initViewMode(){
-    print('BaseViewModel initViewMode');
     assert(_lifecycleState==_StateLifecycle.created);
     _lifecycleState=_StateLifecycle.initialized;
   }
 
-  Future request();
+  Future request(Req request);
 
   void dispose(){
     assert(_lifecycleState==_StateLifecycle.initialized);

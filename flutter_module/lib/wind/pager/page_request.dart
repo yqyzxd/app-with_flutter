@@ -7,4 +7,5 @@ class PageRequest extends BaseRequest{
 
    int page;
    int size;
+   bool firstPage;
 }

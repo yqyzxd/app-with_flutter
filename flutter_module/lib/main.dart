@@ -5,6 +5,9 @@ import 'package:flutter_module/banner_view_model.dart';
 import 'package:flutter_module/flutter_initializer.dart';
 import 'package:flutter_module/wind/mvvm/view_model_provider.dart';
 
+import 'articles_page.dart';
+import 'articles_view_model.dart';
+import 'banner_page2.dart';
 import 'mu_notify.dart';
 import 'request/banner_request.dart';
 import 'response/banner_response.dart';
@@ -24,28 +27,16 @@ class MyApp extends StatelessWidget {
 
   MyApp(){
     FlutterInitializer.init();
-    //testHttp();
   }
 
-  void testHttp(){
-    final bannerRequest=BannerRequest();
-    Dios.getInstance().get("/banner/json", bannerRequest.toJson(),(responseMap){
-      final response=BannerResponse.fromJson(responseMap);
-      response.data.forEach((element) {
-        print(element.desc);
-      });
-    },(e){
-      print("onError"+e.msg);
-    });
-  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Welcome to Flutter",
       theme: ThemeData(primaryColor: Colors.white),
       home:ViewModelProvider(
-        viewModel: BannerViewModel(),
-        child: BannerPage(),
+        viewModel: ArticlesViewModel(),
+        child: NewsListPage(),//BannerPage2(),//BannerPage(),
       )/*LoadingWidget(
           content: MsgNotificationSettingWidget(),
         state: LoadingWidget.CONTENT_STATE,

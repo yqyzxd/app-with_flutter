@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
  */
 abstract class DisplayItem {}
 
-abstract class AdapteDelegate<T> {
-  bool isForViewType(T item, int position);
+abstract class AdapteDelegate<T extends DisplayItem> {
+  bool isForViewType(DisplayItem item, int position);
 
   Widget onBuildWidget(T item, int position);
 }
 
-class AdapterDelegatesManager<T> {
+class AdapterDelegatesManager<T extends DisplayItem> {
   final _delegates = new Map<int, AdapteDelegate>();
 
   AdapterDelegatesManager<T> addDelegate(AdapteDelegate<T> delegate,
@@ -82,6 +82,9 @@ abstract class BaseDelegateAdapter {
 
   void replace(List<DisplayItem> items) {
     this.items = items;
+  }
+  void addAll(List<DisplayItem> items){
+    this.items.addAll(items);
   }
 }
 

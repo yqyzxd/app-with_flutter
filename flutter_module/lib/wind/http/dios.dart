@@ -37,7 +37,7 @@ class Dios {
   Future get(
       String path, Map<String,dynamic> requestParameters,OnSuccess onSuccess,  OnError onError) {
       //参数不填options时 ResponseType为json，r.data.toString()输出的json 子段没有双引号，导致 jsonDecode报错
-      _dio.get(path,queryParameters:requestParameters,options:  Options(responseType: ResponseType.plain)).then((r) {
+      return _dio.get(path,queryParameters:requestParameters,options:  Options(responseType: ResponseType.plain)).then((r) {
         if (r.statusCode == HttpStatus.ok) {
           //转化成 json
           //print("r.data.toString()  "+r.data.toString());
@@ -54,7 +54,7 @@ class Dios {
       String path, Map<String,dynamic> requestParameters,OnSuccess onSuccess,  OnError onError) {
     //build queryParameters
 
-    _dio.post(path, queryParameters: requestParameters,options:  Options(responseType: ResponseType.plain)).then((r) {
+    return _dio.post(path, queryParameters: requestParameters,options:  Options(responseType: ResponseType.plain)).then((r) {
       if (r.statusCode == HttpStatus.ok) {
         //转化成 json
         Map<String,dynamic> map= jsonDecode(r.data.toString());

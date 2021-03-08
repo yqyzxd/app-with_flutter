@@ -11,7 +11,6 @@ abstract class ViewModelHolder<T extends StatefulWidget,VM extends BaseViewModel
   @override
   void initState() {
     super.initState();
-    print('ViewModelHolder initState');
     viewModel=ViewModelProvider.of(context);
   }
 }
