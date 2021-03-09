@@ -18,7 +18,7 @@ class _NewsListPageState extends BasePagerState<ArticlesViewModel> {
   PageRequest buildRequest(bool firstPage) {
     ArticlesRequest request = new ArticlesRequest();
     request.firstPage = firstPage;
-    request.size = 10;
+    request.size = 30;
     return request;
   }
 
@@ -45,6 +45,6 @@ class ArticleDelegate extends AdapteDelegate<Article> {
 
   @override
   Widget onBuildWidget(Article item, int position) {
-    return Text(item.title);
+    return Text(item.title,style: TextStyle(fontSize: 20),);
   }
 }

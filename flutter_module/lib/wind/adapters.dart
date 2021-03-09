@@ -83,42 +83,52 @@ abstract class BaseDelegateAdapter {
   void replace(List<DisplayItem> items) {
     this.items = items;
   }
-  void addAll(List<DisplayItem> items){
+
+  void addAll(List<DisplayItem> items) {
     this.items.addAll(items);
   }
-  void add(DisplayItem item){
+
+  void add(DisplayItem item) {
     this.items.add(item);
+  }
+
+  void remove(DisplayItem item) {
+    this.items.remove(item);
   }
 }
 
 /**
  * 加载更多
  */
-class LoadingMoreDelegate extends AdapteDelegate<DisplayItem> {
+class LoadingMoreDelegate extends AdapteDelegate<LoadingMoreItem> {
   @override
   bool isForViewType(DisplayItem item, int position) {
     return item is LoadingMoreItem;
   }
 
   @override
-  Widget onBuildWidget(DisplayItem item, int position) {
-    return LoadingMoreWidget(item as LoadingMoreItem);
+  Widget onBuildWidget(LoadingMoreItem item, int position) {
+    return LoadingMoreWidget(item);
   }
 }
 
 class LoadingMoreWidget extends StatelessWidget {
   final LoadingMoreItem item;
+
   LoadingMoreWidget(this.item);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 50,
-      color: item.backgroundColor==0?Colors.white:Color(item.backgroundColor),
+      color: item.backgroundColor == 0
+          ? Colors.white
+          : Color(item.backgroundColor),
       alignment: Alignment.center,
       child: Text(
-        item.text.isEmpty?'正在努力加载...':item.text,
-        style: TextStyle(color:item.textColor==0?Colors.black:Color(item.textColor)),
+        item.text.isEmpty ? '正在努力加载...' : item.text,
+        style: TextStyle(
+            color: item.textColor == 0 ? Colors.black : Color(item.textColor)),
       ),
     );
   }
@@ -126,7 +136,7 @@ class LoadingMoreWidget extends StatelessWidget {
 
 class LoadingMoreItem implements DisplayItem {
   //dart 默认值都是null包括int类型。
-  int backgroundColor =0;
-  int textColor =0;
-  String text="";
+  int backgroundColor = 0;
+  int textColor = 0;
+  String text = "";
 }

@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_module/bean/paged_data.dart';
 import 'package:flutter_module/wind/pager/page_list_response.dart';
 import 'package:flutter_module/wind/pager/paged_data_response.dart';
 
@@ -27,7 +30,7 @@ abstract class BasePagerState<VM extends PageViewModel> extends ViewModelHolder<
   }
   PageRequest buildRequest(bool firstPage);
 
-  void loadFirstPage(){
+  Future<void> loadFirstPage() async{
     pageViewModel.loadFirstPage(buildRequest(true));
   }
   void loadNextPage(){
@@ -65,7 +68,7 @@ abstract class BasePagerState<VM extends PageViewModel> extends ViewModelHolder<
 
   BaseDelegateAdapter createAdapter();
   Widget buildDivider(){
-    return Divider(height: 0.0);
+    return Divider(height: 1);
   }
 
 
@@ -73,10 +76,18 @@ abstract class BasePagerState<VM extends PageViewModel> extends ViewModelHolder<
       bool firstPage = response.firstPage;
       List<DisplayItem> items=[];
       if(response.data is PagedData){
-        items=(response.data as PagedData).datas;
+        items.addAll((response.data as PagedData).datas);
 
       }else if(response.data is List){
-        items = response.data;
+        items.addAll(response.data);
+      }
+      //删除adapter中的加载更多
+      if(adapter.items.length>0) {
+        bool hasMore = adapter.items.elementAt(
+            adapter.items.length - 1) is LoadingMoreItem;
+        if (hasMore == true) {
+          adapter.remove(adapter.items[adapter.items.length - 1]);
+        }
       }
 
       if (firstPage==true) {
@@ -84,23 +95,35 @@ abstract class BasePagerState<VM extends PageViewModel> extends ViewModelHolder<
       } else {
         adapter.addAll(items);
       }
-      return ListView.builder(
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-      /*  if (i.isOdd) buildDivider();
+
+
+      return RefreshIndicator(
+        child: _buildListView(),
+        onRefresh: loadFirstPage,
+      );
+
+
+  }
+
+  ListView _buildListView(){
+    return ListView.separated(
+        itemCount: adapter.items.length+1, //列表项的数量，如果为null，则为无限列表
+        separatorBuilder: (context, index) => buildDivider(),
+        itemBuilder: (context, index) {
+          /*  if (i.isOdd) buildDivider();
 
         final index = i ~/ 2;*/
-        if (index >= adapter.items.length) {
-          //todo 加载更多
-          bool hasMore=adapter.items.elementAt(adapter.items.length-1) is LoadingMoreItem;
-          if(!hasMore){
-            items.add(LoadingMoreItem());
+          if (index >= adapter.items.length) {
+            //todo 加载更多
+            loadNextPage();
+            bool hasMore=adapter.items.elementAt(adapter.items.length-1) is LoadingMoreItem;
+            if(!hasMore){
+              adapter.items.add(LoadingMoreItem());
+            }
           }
-        }
-        return buildRow(items.elementAt(index), index);
-      });
-
-
+          //print("ListView.builder index:"+index.toString());
+          return buildRow(adapter.items.elementAt(index), index);
+        });
   }
 
   Widget buildRow(DisplayItem item,int position){

@@ -6,15 +6,16 @@ import 'package:flutter_module/wind/pager/page_response.dart';
 abstract class PageViewModel<Req extends PageRequest,Resp extends PageResponse> extends BaseViewModel<Req,Resp>{
   bool loading=false;
   int page=0;
-  Future loadFirstPage(Req req){
+  Future<void> loadFirstPage(Req req) async{
     page=0;
     req.page=page;
-    return request(req);
+    request(req);
+    return null;
   }
 
-  Future loadNextPage(Req req){
+  Future loadNextPage(Req req) async{
     page++;
     req.page=page;
-    return request(req);
+    request(req);
   }
 }
