@@ -4,8 +4,9 @@ import 'package:flutter_module/response/articles_response.dart';
 import 'package:flutter_module/wind/mvvm/base_view_model.dart';
 
 import 'wind/http/dios.dart';
+import 'wind/mvvm/page_view_model.dart';
 
-class ArticlesViewModel extends BaseViewModel<ArticlesRequest,ArticlesResponse>{
+class ArticlesViewModel extends PageViewModel<ArticlesRequest,ArticlesResponse>{
   @override
   Future request(ArticlesRequest request) {
 

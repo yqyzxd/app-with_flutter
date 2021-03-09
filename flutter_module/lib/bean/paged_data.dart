@@ -7,19 +7,7 @@ class PagedData<T>{
   int curPage;
   int pageCount;
 
-  List<T> datas;
+  T datas;
 
-
-  PagedData({this.curPage, this.pageCount, this.datas});
-
-  factory PagedData.fromJson(Map<String,dynamic> json){
-
-    return PagedData(
-      curPage: json['curPage'],
-      pageCount: json['pageCount'],
-      datas: json['datas'].cast<T>(),
-    );
-  }
-
-
+  PagedData(this.curPage, this.pageCount, this.datas);
 }

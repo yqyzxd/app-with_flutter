@@ -36,11 +36,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primaryColor: Colors.white),
       home:ViewModelProvider(
         viewModel: ArticlesViewModel(),
-        child: NewsListPage(),//BannerPage2(),//BannerPage(),
-      )/*LoadingWidget(
-          content: MsgNotificationSettingWidget(),
-        state: LoadingWidget.CONTENT_STATE,
-      ),*///RandomWords(),
+        child: NewsListPage(),
+      ),//RandomWords(),
     );
   }
 }

@@ -5,19 +5,22 @@ import 'package:flutter_module/wind/pager/paged_data_response.dart';
 import 'adapters.dart';
 import 'http/base_response.dart';
 import 'mvvm/base_view_model.dart';
+import 'mvvm/page_view_model.dart';
 import 'mvvm/view_model_holder.dart';
+import 'offstage_appbar.dart';
 import 'pager/page_request.dart';
+import 'pager/page_response.dart';
 import 'widget_loading.dart';
 
-abstract class BasePagerState<VM extends BaseViewModel,Resp extends BaseResponse> extends ViewModelHolder<StatefulWidget,VM>  {
+abstract class BasePagerState<VM extends PageViewModel> extends ViewModelHolder<StatefulWidget,VM>  {
 
   BaseDelegateAdapter adapter;
-
-
+  PageViewModel pageViewModel;
 
   @override
   void initState() {
     super.initState();
+    pageViewModel=viewModel;
     adapter=createAdapter();
     loadFirstPage();
 
@@ -25,32 +28,35 @@ abstract class BasePagerState<VM extends BaseViewModel,Resp extends BaseResponse
   PageRequest buildRequest(bool firstPage);
 
   void loadFirstPage(){
-    PageRequest request= buildRequest(true);
-    viewModel.request(request);
+    pageViewModel.loadFirstPage(buildRequest(true));
   }
   void loadNextPage(){
-    PageRequest request= buildRequest(false);
-    viewModel.request(request);
+    pageViewModel.loadNextPage(buildRequest(false));
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: viewModel.dataStream,
-      builder: (BuildContext context,AsyncSnapshot<BaseResponse> snapshot){
-        return _showLoadingWidget(snapshot);
-      },
+    return Scaffold(
+      appBar:OffstageAppBar(context),
+      body: StreamBuilder(
+        stream: viewModel.dataStream,
+        builder: (BuildContext context,AsyncSnapshot<PageResponse> snapshot){
+          return _showLoadingWidget(snapshot);
+        },
+      ),
     );
+
+
   }
 
-  LoadingWidget _showLoadingWidget(AsyncSnapshot<BaseResponse> snapshot) {
+  LoadingWidget _showLoadingWidget(AsyncSnapshot<PageResponse> snapshot) {
     int state=LoadingWidget.LOADING_STATE;
     if(snapshot.connectionState!=ConnectionState.waiting){
       state= snapshot.hasError?LoadingWidget.ERROR_STATE:LoadingWidget.CONTENT_STATE;
     }
 
     return LoadingWidget(
-      content:buildContent(snapshot.data),
+      content:state==LoadingWidget.CONTENT_STATE?buildContent(snapshot.data):Text('error'),
       state: state,
     );
 
@@ -63,31 +69,37 @@ abstract class BasePagerState<VM extends BaseViewModel,Resp extends BaseResponse
   }
 
 
-  Widget buildContent(BaseResponse response) {
-    bool firstPage=true;
-    List<DisplayItem> items=[];
-    if(response is PageListResponse){
-      firstPage=response.firstPage;
-      items=response.data;
-    }else if(response is PagedDataResponse){
-      firstPage=response.firstPage;
-      items=response.data.datas;
-    }
-    if(firstPage==true) {
-      adapter.replace(items);
-    }else{
-      adapter.addAll(items);
-    }
-    return ListView.builder(itemBuilder: (context, i) {
-      if (i.isOdd) buildDivider();
+  Widget buildContent(PageResponse response) {
+      bool firstPage = response.firstPage;
+      List<DisplayItem> items=[];
+      if(response.data is PagedData){
+        items=(response.data as PagedData).datas;
 
-      final index = i ~/ 2;
-      if (index >= adapter.items.length) {
-        //todo 加载更多
-      } else {
-        return buildRow(response.data.elementAt(index),index);
+      }else if(response.data is List){
+        items = response.data;
       }
-    });
+
+      if (firstPage==true) {
+        adapter.replace(items);
+      } else {
+        adapter.addAll(items);
+      }
+      return ListView.builder(
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+      /*  if (i.isOdd) buildDivider();
+
+        final index = i ~/ 2;*/
+        if (index >= adapter.items.length) {
+          //todo 加载更多
+          bool hasMore=adapter.items.elementAt(adapter.items.length-1) is LoadingMoreItem;
+          if(!hasMore){
+            items.add(LoadingMoreItem());
+          }
+        }
+        return buildRow(items.elementAt(index), index);
+      });
+
 
   }
 

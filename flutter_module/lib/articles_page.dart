@@ -13,13 +13,11 @@ class NewsListPage extends StatefulWidget {
   _NewsListPageState createState() => _NewsListPageState();
 }
 
-class _NewsListPageState
-    extends BasePagerState<ArticlesViewModel, ArticlesResponse> {
+class _NewsListPageState extends BasePagerState<ArticlesViewModel> {
   @override
   PageRequest buildRequest(bool firstPage) {
     ArticlesRequest request = new ArticlesRequest();
     request.firstPage = firstPage;
-    request.page = 0;
     request.size = 10;
     return request;
   }
@@ -33,7 +31,9 @@ class _NewsListPageState
 class ArticleAdapter extends BaseDelegateAdapter {
   @override
   void addDelegate() {
-    manager.addDelegate(new ArticleDelegate());
+    manager
+        .addDelegate(new ArticleDelegate())
+        .addDelegate(LoadingMoreDelegate());
   }
 }
 
