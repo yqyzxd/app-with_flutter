@@ -1,5 +1,5 @@
 
-import 'package:flutter_module/wind/pager/page_request.dart';
+import 'package:flutter_module/wind/http/page_request.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'articles_request.g.dart';
 

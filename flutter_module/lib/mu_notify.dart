@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_module/wind/adapters.dart';
+import 'package:flutter_module/wind/adapter/adapters.dart';
 import 'package:flutter_module/wind/title_bar.dart';
 
 class MsgNotificationSettingWidget extends StatefulWidget {

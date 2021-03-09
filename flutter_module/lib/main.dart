@@ -5,8 +5,8 @@ import 'package:flutter_module/banner_view_model.dart';
 import 'package:flutter_module/flutter_initializer.dart';
 import 'package:flutter_module/wind/mvvm/view_model_provider.dart';
 
-import 'articles_page.dart';
-import 'articles_view_model.dart';
+import 'article_page/articles_page.dart';
+import 'article_page/articles_view_model.dart';
 import 'banner_page2.dart';
 import 'mu_notify.dart';
 import 'request/banner_request.dart';

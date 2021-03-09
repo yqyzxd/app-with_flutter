@@ -1,18 +1,11 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_module/bean/paged_data.dart';
-import 'package:flutter_module/wind/pager/page_list_response.dart';
-import 'package:flutter_module/wind/pager/paged_data_response.dart';
-
-import 'adapters.dart';
-import 'http/base_response.dart';
-import 'mvvm/base_view_model.dart';
+import 'adapter/adapters.dart';
+import 'http/page_response.dart';
 import 'mvvm/page_view_model.dart';
 import 'mvvm/view_model_holder.dart';
 import 'offstage_appbar.dart';
-import 'pager/page_request.dart';
-import 'pager/page_response.dart';
+import 'http/page_request.dart';
 import 'widget_loading.dart';
 
 abstract class BasePagerState<VM extends PageViewModel> extends ViewModelHolder<StatefulWidget,VM>  {

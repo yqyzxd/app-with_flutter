@@ -1,5 +1,5 @@
 
-import 'package:flutter_module/wind/adapters.dart';
+import 'package:flutter_module/wind/adapter/adapters.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'article.g.dart';
 

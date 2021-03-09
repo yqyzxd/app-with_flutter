@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_module/articles_view_model.dart';
+import 'package:flutter_module/article_page/articles_view_model.dart';
 import 'package:flutter_module/bean/article.dart';
 import 'package:flutter_module/request/articles_request.dart';
 import 'package:flutter_module/response/articles_response.dart';
-import 'package:flutter_module/wind/adapters.dart';
-import 'package:flutter_module/wind/pager/page_request.dart';
+import 'package:flutter_module/wind/adapter/adapters.dart';
+import 'package:flutter_module/wind/http/page_request.dart';
 
-import 'wind/base_pager_widget.dart';
+import '../wind/base_pager_widget.dart';
 
 class NewsListPage extends StatefulWidget {
   @override
