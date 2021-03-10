@@ -6,7 +6,7 @@ import 'package:flutter_module/response/articles_response.dart';
 import 'package:flutter_module/wind/adapter/adapters.dart';
 import 'package:flutter_module/wind/http/page_request.dart';
 
-import '../wind/base_pager_widget.dart';
+import '../wind/base_pager_state.dart';
 
 class NewsListPage extends StatefulWidget {
   @override
@@ -45,6 +45,6 @@ class ArticleDelegate extends AdapteDelegate<Article> {
 
   @override
   Widget onBuildWidget(Article item, int position) {
-    return Text(item.title,style: TextStyle(fontSize: 20),);
+    return Text(item.title,style: TextStyle(fontSize: 40),);
   }
 }

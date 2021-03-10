@@ -16,14 +16,9 @@ class ArticlesViewModel
         "/article/list/" + request.page.toString() + "/json", request.toJson(),
         (responseMap) {
       final response = ArticlesResponse.fromJson(responseMap);
-      print('dataObservable.add(response);');
+      response.firstPage=request.firstPage;
       return dataObservable.add(response);
     }, (e) {
-      print('dataObservable.addError(e)  e.msg:' +
-          e.msg +
-          "e.code:" +
-          e.code.toString());
-
       return dataObservable.addError(e);
     });
   }

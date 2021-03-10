@@ -24,9 +24,11 @@ abstract class BasePagerState<VM extends PageViewModel> extends ViewModelHolder<
   PageRequest buildRequest(bool firstPage);
 
   Future<void> loadFirstPage() async{
+    print('loadFirstPage');
     pageViewModel.loadFirstPage(buildRequest(true));
   }
   void loadNextPage(){
+    print('loadNextPage');
     pageViewModel.loadNextPage(buildRequest(false));
   }
 
@@ -82,7 +84,6 @@ abstract class BasePagerState<VM extends PageViewModel> extends ViewModelHolder<
           adapter.remove(adapter.items[adapter.items.length - 1]);
         }
       }
-
       if (firstPage==true) {
         adapter.replace(items);
       } else {
