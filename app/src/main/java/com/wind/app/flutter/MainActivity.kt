@@ -1,11 +1,15 @@
 package com.wind.app.flutter
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngineCache
+import io.flutter.plugin.common.MethodChannel
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
+    val CHANNEL = "com.wind/app_info"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -15,7 +19,12 @@ class MainActivity : AppCompatActivity() {
                             .withCachedEngine("engine_name")
                             .build(this)
             )
-
         }
+
+        val flutterEngine= FlutterEngineCache.getInstance().get("engine_name")
+        MethodChannelImpl.setEngine(flutterEngine!!,CHANNEL)
+
     }
+
+
 }

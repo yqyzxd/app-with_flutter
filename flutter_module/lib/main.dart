@@ -8,6 +8,8 @@ import 'package:flutter_module/wind/mvvm/view_model_provider.dart';
 import 'article_page/articles_page.dart';
 import 'article_page/articles_view_model.dart';
 import 'banner_page2.dart';
+import 'canvas_ripple.dart';
+import 'method_channel_demo.dart';
 import 'mu_notify.dart';
 import 'request/banner_request.dart';
 import 'response/banner_response.dart';
@@ -24,7 +26,12 @@ void main() => runApp(MyApp());
 
 
 class MyApp extends StatelessWidget {
-
+  /**
+   * ViewModelProvider(
+      viewModel: ArticlesViewModel(),
+      child: NewsListPage(),
+      )
+   */
   MyApp(){
     FlutterInitializer.init();
   }
@@ -34,10 +41,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Welcome to Flutter",
       theme: ThemeData(primaryColor: Colors.white),
-      home:ViewModelProvider(
-        viewModel: ArticlesViewModel(),
-        child: NewsListPage(),
-      ),//RandomWords(),
+      home:Ripple(),//RandomWords(),
     );
   }
 }
