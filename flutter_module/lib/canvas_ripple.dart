@@ -9,11 +9,11 @@ class CanvasCirclePainter extends CustomPainter {
   bool start;
 
   CanvasCirclePainter(this.mRadius) {
-
     mPaint = Paint()
       ..style = PaintingStyle.stroke
       ..isAntiAlias = true
       ..strokeWidth = 1;
+    mPaint.color = (Colors.white);
   }
 
   @override
@@ -33,33 +33,43 @@ class Ripple extends StatefulWidget {
   _RippleState createState() => _RippleState();
 }
 
-class _RippleState extends State<Ripple> with TickerProviderStateMixin{
+class _RippleState extends State<Ripple> with TickerProviderStateMixin {
   int count = 4;
 
+  int mRaduis = 10;
 
-
-  int mRaduis=10;
   @override
   void initState() {
     super.initState();
-
-
-
+    Future.delayed(Duration(seconds: 500 * 2), () {
+      start();
+    });
 
   }
 
   void start() {
     for (int i = 0; i < count; i++)
-      Future.delayed(Duration(seconds: 500 * i), () {
 
-
+      //获取state
+      context.visitChildElements((element) {
+        if (element.widget is AnimatedCanvasCircle) {
+          var circleWidget = element.widget as AnimatedCanvasCircle;
+          Future.delayed(Duration(seconds: 500 * i), () {
+            circleWidget.state.start();
+          });
+        }
       });
   }
 
+  GlobalKey<_AnimatedCanvasCircleState> _childViewKey =
+      new GlobalKey<_AnimatedCanvasCircleState>();
+
   List<Widget> _buildRipple() {
-    var widgets = [];
+    var widgets = <Widget>[];
     for (int i = 0; i < 4; i++) {
-      widgets.add(AnimatedCanvasCircle());
+      widgets.add(AnimatedCanvasCircle(
+        key: ValueKey(i),
+      ));
     }
     return widgets;
   }
@@ -74,51 +84,58 @@ class _RippleState extends State<Ripple> with TickerProviderStateMixin{
   @override
   void dispose() {
     super.dispose();
-
   }
-
-
-
 }
 
 class AnimatedCanvasCircle extends StatefulWidget {
+  _AnimatedCanvasCircleState state;
+
+  AnimatedCanvasCircle({Key key}) : super(key: key);
+
   @override
-  _AnimatedCanvasCircleState createState() => _AnimatedCanvasCircleState();
+  _AnimatedCanvasCircleState createState() {
+    state = _AnimatedCanvasCircleState();
+    return state;
+  }
 }
 
-class _AnimatedCanvasCircleState extends State<AnimatedCanvasCircle> with SingleTickerProviderStateMixin{
-
+class _AnimatedCanvasCircleState extends State<AnimatedCanvasCircle>
+    with SingleTickerProviderStateMixin {
   AnimationController _animationController;
   Animation<int> animation;
 
-  int mRadius;
-  int minRaduis=10;
-  int maxRaduis=120;
+  int mRadius = 60;
+  int minRaduis = 10;
+  int maxRaduis = 120;
 
   @override
   void initState() {
     super.initState();
 
-    _animationController=new AnimationController(vsync: this,duration: Duration(seconds: 3));
-    animation=new Tween(begin: minRaduis,end: maxRaduis).animate(_animationController);
+    _animationController =
+        new AnimationController(vsync: this, duration: Duration(seconds: 3));
+    animation = new Tween(begin: minRaduis, end: maxRaduis)
+        .animate(_animationController);
 
     animation.addListener(() {
-        setState(() {
-          mRadius=animation.value;
-        });
+      setState(() {
+        mRadius = animation.value;
+      });
     });
   }
 
-  void start(){
+  void start() {
     _animationController.forward();
   }
+
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      size: Size(300, 300),
+      size: Size(600, 600),
       painter: new CanvasCirclePainter(mRadius),
     );
   }
+
   @override
   void dispose() {
     super.dispose();

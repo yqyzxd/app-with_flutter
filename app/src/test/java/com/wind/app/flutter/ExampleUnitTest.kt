@@ -14,4 +14,19 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
+    @Test
+    fun testGenerator() {
+
+        val nums = genetator { start:Int->
+            for (i in 0..5){
+                yield(start+i)
+            }
+        }
+
+
+        val gen=nums(10)
+        for (i in gen){
+            println(i)
+        }
+    }
 }

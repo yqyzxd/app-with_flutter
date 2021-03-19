@@ -105,7 +105,7 @@ class SettingGroupWidget extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 16.0),
             child: Text(
               item.title,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.black),
             ),
           ),
         ],
