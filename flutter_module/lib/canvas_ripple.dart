@@ -38,38 +38,45 @@ class _RippleState extends State<Ripple> with TickerProviderStateMixin {
 
   int mRaduis = 10;
 
+  var childStates= <AnimatedCanvasCircle>[];
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 500 * 2), () {
+    Future.delayed(Duration(seconds: 2), () {
+      print("_RippleState delayed");
       start();
     });
 
   }
 
   void start() {
-    for (int i = 0; i < count; i++)
 
+    for (int i = 0; i < count; i++)
+      Future.delayed(Duration(milliseconds: 500 * i), () {
+        childStates[i].state.start();
+      });
       //获取state
-      context.visitChildElements((element) {
+     /* context.visitChildElements((element) {
+        print(element.widget.runtimeType);
         if (element.widget is AnimatedCanvasCircle) {
           var circleWidget = element.widget as AnimatedCanvasCircle;
           Future.delayed(Duration(seconds: 500 * i), () {
+            print("circleWidget.state.start()");
             circleWidget.state.start();
           });
         }
-      });
+      });*/
   }
 
-  GlobalKey<_AnimatedCanvasCircleState> _childViewKey =
-      new GlobalKey<_AnimatedCanvasCircleState>();
+
 
   List<Widget> _buildRipple() {
+    childStates.clear();
     var widgets = <Widget>[];
     for (int i = 0; i < 4; i++) {
-      widgets.add(AnimatedCanvasCircle(
-        key: ValueKey(i),
-      ));
+     var circle= AnimatedCanvasCircle();
+     childStates.add(circle);
+      widgets.add(circle);
     }
     return widgets;
   }
@@ -111,21 +118,26 @@ class _AnimatedCanvasCircleState extends State<AnimatedCanvasCircle>
   @override
   void initState() {
     super.initState();
-
+    mRadius=minRaduis;
     _animationController =
         new AnimationController(vsync: this, duration: Duration(seconds: 3));
-    animation = new Tween(begin: minRaduis, end: maxRaduis)
+    animation = new IntTween(begin: minRaduis, end: maxRaduis)
         .animate(_animationController);
 
     animation.addListener(() {
       setState(() {
         mRadius = animation.value;
+        print("mRadius: $mRadius");
       });
     });
+
+
+
   }
 
   void start() {
-    _animationController.forward();
+
+    _animationController.repeat(reverse: false);
   }
 
   @override
