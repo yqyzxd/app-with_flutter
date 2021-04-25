@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
     val CHANNEL = "com.wind/app_info"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        println("onCreate")
         setContentView(R.layout.activity_main)
         findViewById<Button>(R.id.btn).setOnClickListener {
             startActivity(
@@ -26,5 +27,19 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        println("onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        println("onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        println("onStop")
+    }
 
 }
