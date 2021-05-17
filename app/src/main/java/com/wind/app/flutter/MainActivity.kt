@@ -25,6 +25,16 @@ class MainActivity : AppCompatActivity() {
         val flutterEngine= FlutterEngineCache.getInstance().get("engine_name")
         MethodChannelImpl.setEngine(flutterEngine!!,CHANNEL)
 
+
+
+        val remainMemory=RuntimeUtil.getSystemRemainMemory()
+        val appMemory=RuntimeUtil.getAppMemory()
+        val processStatus=RuntimeUtil.getProcessStatus()
+
+        val eventLog=RuntimeUtil.getEventLog()
+
+        val cpuCount=RuntimeUtil.getCPUCount()
+        println("cpuCount:$cpuCount")
     }
 
     override fun onResume() {
